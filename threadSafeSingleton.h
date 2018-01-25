@@ -63,10 +63,12 @@ public:
 		// Do something...
 	}
 
-	void addElement(myDataClass<T>* theElement)
+	void addElement(T& theElement)
 	{
 		std::lock_guard<std::mutex> guard(myMutex);
-		myData.push_back(std::move(theElement));
+
+		myDataClass<T>* dc = new myDataClass<T>(theElement);
+		myData.push_back(std::move(dc));
 	}
 
 	void removeElementAt(int theIdx)
